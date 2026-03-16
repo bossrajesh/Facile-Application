@@ -63,35 +63,7 @@ fms-auth/
         └── schema.sql                               ← MySQL table definitions
 ```
 
----
 
-## 🗄️ Database Tables
-
-### `fms_user_master`
-| Column             | Type         | Description                            |
-|--------------------|--------------|----------------------------------------|
-| user_id            | BIGINT (PK)  | Auto-generated ID                      |
-| username           | VARCHAR(100) | Full name                              |
-| email              | VARCHAR(150) | Email — unique                         |
-| mobile_number      | VARCHAR(15)  | Mobile — unique, used for OTP          |
-| is_mobile_verified | BOOLEAN      | True after OTP verification            |
-| status             | VARCHAR(20)  | ACTIVE / INACTIVE                      |
-| created_at         | DATETIME     | Registration timestamp                 |
-| updated_at         | DATETIME     | Last updated timestamp                 |
-
-### `fms_mobile_otp`
-| Column         | Type        | Description                              |
-|----------------|-------------|------------------------------------------|
-| otp_id         | BIGINT (PK) | Auto-generated ID                        |
-| mobile_number  | VARCHAR(15) | FK → fms_user_master.mobile_number       |
-| otp_code       | VARCHAR(10) | 6-digit OTP                              |
-| expires_at     | DATETIME    | OTP expiry (created + 5 min)             |
-| is_used        | BOOLEAN     | True if consumed or invalidated          |
-| is_verified    | BOOLEAN     | True if successfully verified            |
-| attempt_count  | INT         | Wrong attempts counter (max 3)           |
-| created_at     | DATETIME    | When OTP was generated                   |
-
----
 
 ## 🌐 API Endpoints
 
@@ -240,24 +212,12 @@ POST /api/v1/auth/otp/verify
 - MySQL 8.0+
 
 ### Setup
-1. Create MySQL database:
-   ```sql
-   CREATE DATABASE fms_db;
-   ```
 
-2. Update `application.properties`:
-   ```properties
-   spring.datasource.username=your_mysql_username
-   spring.datasource.password=your_mysql_password
-   ```
-
-3. Run the application:
+1. Run the application:
    ```bash
    cd fms-auth
    mvn spring-boot:run
    ```
-
-4. Tables are auto-created by Hibernate on startup.
 
 ### Test with Postman
 
@@ -290,4 +250,3 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
 - OTP is returned in response **for development only** — use an SMS gateway (Twilio, MSG91, etc.) in production
 - OTP expires after 5 minutes and is locked after 3 failed attempts
 - Passwords are masked in logs
-- All endpoints under `/api/v1/auth/**` are public; all others require JWT
