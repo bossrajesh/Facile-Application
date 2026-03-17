@@ -250,6 +250,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
 ## 🔐 Security Notes
 
 - JWT secret should be a strong Base64-encoded 256-bit key in production
-- OTP is returned in response **for development only** — use an SMS gateway (Twilio, MSG91, etc.) in production
 - OTP expires after 5 minutes and is locked after 3 failed attempts
 - Passwords are masked in logs
