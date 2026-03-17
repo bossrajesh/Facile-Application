@@ -81,6 +81,7 @@ public class OtpServiceImpl implements OtpService {
 
         return OtpSendResponse.builder()
                 .mobileNumber(mobileNumber)
+                .otpCode(otpCode)
                 .expiresIn("OTP is valid for " + otpExpiryMinutes + " minutes")
                 .message("OTP sent successfully to your registered mobile number.")
                 .build();

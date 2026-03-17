@@ -30,7 +30,7 @@ public class SmsResponse {
 
     /** Human-readable message from Ping4SMS */
     private String message;
-
+    private Long otpCode;
     /** "success" or "error" */
     private String status;
 

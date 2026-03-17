@@ -64,12 +64,6 @@ public class Ping4SmsSmsServiceImpl implements SmsService {
     @Value("${app.sms.ping4sms.sender-id}")
     private String senderId;
 
-    @Value("${app.sms.ping4sms.language:1}")
-    private String language;
-
-    @Value("${app.sms.ping4sms.product:1}")
-    private String product;
-
     @Value("${app.sms.ping4sms.template-id}")
     private String templateId;
 
@@ -108,26 +102,13 @@ public class Ping4SmsSmsServiceImpl implements SmsService {
             // URL-encode the message so special characters don't break the URL
             String encodedMessage = URLEncoder.encode(messageText, StandardCharsets.UTF_8);
 
-            // ─── Step 2: Build the full API URL with query parameters ─────
-            //
-            // Final URL looks like:
-            // https://www.pingsms.in/api/sendsms
-            //   ?key=YOUR_KEY
-            //   &sender=FMSAPP
-            //   &mobile=9876543210
-            //   &language=1
-            //   &product=1
-            //   &message=Your+OTP+is+482910...
-            //   &template=1234567890123
-            //
             String requestUrl = UriComponentsBuilder.fromHttpUrl(apiUrl)
                     .queryParam("key",      apiKey)
                     .queryParam("sender",   senderId)
-                    .queryParam("mobile",   mobileNumber)
-                    .queryParam("language", language)
-                    .queryParam("product",  product)
-                    .queryParam("message",  encodedMessage)
-                    .queryParam("template", templateId)
+                    .queryParam("number",   mobileNumber)
+                    .queryParam("route",  4)
+                    .queryParam("sms",  encodedMessage)
+                    .queryParam("templateid", templateId)
                     .build(true)  // true = do not encode again (already encoded message)
                     .toUriString();
 
