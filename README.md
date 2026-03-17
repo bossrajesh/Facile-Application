@@ -74,9 +74,12 @@ POST /api/v1/auth/register
 **Request:**
 ```json
 {
-  "username": "John Doe",
-  "email": "john@example.com",
-  "mobileNumber": "9876543210"
+  "userName": "John Doe",
+  "designation": "Senior Manager",
+  "companyName": "Acme Corporation",
+  "mobileNumber": "9876543210",
+  "email": "rajesh.kumar2@example.com",
+  "userId": 66
 }
 ```
 **Success → 201 Created:**
